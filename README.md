@@ -110,3 +110,173 @@ Losses:
 - Store 1 Beauty: .0393
 - Store 1 Beverages: .0030
 - Store 1 Books: 0.0
+
+# Dylan Burke
+I attempted to train a model to predict the total sales for each day for a store given the product families. I split the data for each store into:
+* 60% train
+* 20% Validation
+* 20% Test
+
+The shape of the training and validation data is
+* The day of the sales
+* The number of look back days
+* The sales of the product family
+
+The shape of the testing data is
+* The day of the sales
+* The total sales of all the product famlies
+
+
+My model consists of: 
+* 2 LSTM layers with a variable number of units with input shapes of of the
+* A dropout layer with a value of 0.2
+* A final dense layer with 1 ouput
+``` python
+def train_model(train_x, train_y, val_x, val_y, num_lstm_units, num_epochs, batch_size, test_all):
+    model = Sequential()
+
+    if test_all:
+        model.add(LSTM(units=num_lstm_units, return_sequences=True, input_shape = (train_x.shape[1], train_x.shape[2])))
+
+    if not test_all:
+        model.add(LSTM(units=num_lstm_units, return_sequences=True, input_shape = (train_x.shape[1], 1)))
+
+    model.add(LSTM(units=num_lstm_units))
+    model.add(Dropout(0.2))
+
+    model.add(Dense(units=1))
+
+    loss_fn = tf.keras.losses.MeanSquaredLogarithmicError()
+    model.compile(optimizer='adam', loss=loss_fn)
+
+    hist = model.fit(train_x, train_y, epochs=num_epochs, batch_size=batch_size, validation_data=(val_x, val_y))
+
+    return model, hist
+```
+I trained one model per store using the product families sales to predict the total_sale value for each day of data
+
+The final losses and validation loess for each store are:
+<pre>Loss, Validation Loss
+1: 0.00598, 0.01098
+2: 0.0028, 0.07952
+3: 0.00343, 0.00446
+4: 0.00308, 0.00514
+5: 0.00272, 0.00354
+6: 0.00292, 0.00448
+7: 0.00299, 0.00455
+8: 0.00339, 0.00907
+9: 0.00323, 0.00589
+10: 0.00508, 0.01822
+11: 0.00401, 0.00472
+12: 0.00221, 0.00729
+13: 0.00382, 0.00851
+14: 0.00582, 0.00791
+15: 0.00257, 0.00837
+16: 0.0035, 0.00957
+17: 0.0024, 0.00705
+18: 0.00366, 0.00982
+19: 0.00387, 0.00578
+20: 0.00108, 0.04796
+21: 0.00056, 0.0085
+22: 0.00048, 0.09057
+23: 0.00389, 0.00417
+24: 0.00359, 0.01406
+25: 0.00216, 0.00538
+26: 0.00109, 0.00396
+27: 0.00322, 0.02566
+28: 0.00404, 0.00901
+29: 0.00136, 0.01187
+30: 0.00352, 0.00699
+31: 0.00137, 0.01719
+32: 0.00341, 0.00474
+33: 0.00402, 0.00962
+34: 0.00244, 0.01155
+35: 0.00066, 0.00201
+36: 0.00335, 0.00934
+37: 0.00352, 0.00445
+38: 0.0036 , 0.00715
+39: 0.00421, 0.00666
+40: 0.00312, 0.00592
+41: 0.00261, 0.01228
+42: 0.00061, 0.00571
+43: 0.00237, 0.00548
+44: 0.00396, 0.00601
+45: 0.0036, 0.01128
+46: 0.00333, 0.00547
+47: 0.00328, 0.00496
+48: 0.00292, 0.00585
+49: 0.00317, 0.00947
+50: 0.0027, 0.00811
+51: 0.00369, 0.00554
+52: 0.0, 0.0
+53: 0.00269, 0.00642
+54: 0.00257, 0.00447
+</pre>
+Some of the losses are close to each-other, but others are pretty far from eachother.
+This gap could be closed by better fine tuning the parameters of the model, and possibly changing the size and dimensions of the training and validation sets.
+
+
+A graph of each stores losses vs validation losses can be found in the code.
+
+## Testing
+Testing was done with the remaining 20% of the data. 
+
+The final losses for each of the stores in testing was:
+<pre>
+1: 0.02602
+2: 0.00502
+3: 0.00514
+4: 0.00535
+5: 0.00395
+6: 0.00541
+7 :0.0039
+8: 0.00446
+9: 0.00789
+10: 0.00509
+11: 0.00617
+12: 0.00494
+13: 0.00599
+14: 0.00668
+15: 0.01109
+16: 0.01004
+17: 0.00825
+18: 0.0088
+19: 0.00575
+20: 0.00918
+21: 0.00754
+22: 0.11981
+23: 0.00312
+24: 0.02019
+25: 0.00556
+26: 0.0085
+27: 0.00632
+28: 0.00699
+29: 0.00731
+30: 0.00651
+31: 0.00979
+32: 0.0277
+33: 0.00584
+34: 0.01644
+35: 0.00453
+36: 0.00667
+37: 0.00538
+38: 0.00621
+39: 0.08674
+40: 0.00641
+41: 0.01217
+42: 0.00708
+43: 0.01046
+44: 0.01223
+45: 0.00591
+46: 0.0079
+47: 0.00514
+48: 0.00633
+49: 0.00725
+50: 0.0063
+51: 0.0078
+52: 0.09061
+53: 0.00669
+54: 0.00559
+</pre>
+
+A graph of the model prediction vs actual total sale value for each store can be found in the code.
