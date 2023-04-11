@@ -111,6 +111,9 @@ Losses:
 - Store 1 Beverages: .0030
 - Store 1 Books: 0.0
 
+STEP 6:
+My model was SARIMA, which can be found in the SARIMA folder with an associated README. The evaluation metric [or the closest thing I could find, this is a more traditional model] is contained in the notebook document. There is no learning curve information for this kind of model.
+
 # Dylan Burke
 I attempted to train a model to predict the total sales for each day for a store given the product families. I split the data for each store into:
 * 60% train
