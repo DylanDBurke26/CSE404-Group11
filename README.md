@@ -283,50 +283,32 @@ A graph of the model prediction vs actual total sale value for each store can be
 
 ## Ryan Kunkel
 
-My model is a deep learning neural network that attempts to predict sales for individual product families in each store. During model training, I noticed that the model was taking too long to train and that normalizing the data might help in speeding up the process. Additionally, I considered how null data should be handled and created an architecture for a store-specific model. To fine-tune the model, I used grid search hyperparameters, such as window size and optimizer.
+My model uses LSTM architecture combined with perceptron networkthat attempts to predict sales for individual product families in each store. I made some adjustments to the model architecture to minimize loss, including modifying the look back size and number of units in the LSTM layer. During model training, I noticed that the model was taking too long to train and that normalizing the data might help in speeding up the process. I am slightly concerned how null / missing data should.
 
-output
-Model takes way too long to train
-Most likely need to normalize
-Considerations for null data?
-Architecture for store specific model
-Encapsulate BST
-Grid search hyperparams
-window size
-optimizer
 
-Output
--6.1686362e-05,
- 4.6692055e-01, 
- 3.8359444e+01, 
- -2.6546391e-05,
-1.8567648e+02, 
-1.6154854e+00,
- 4.1970105e+02, 
- 3.5754965e+02,
-3.5898205e+01, 
-1.7267962e+01, 
-9.8091194e+01, 
--2.0850977e+02,
-5.2151585e+00, 
--4.8492447e-02, 
-1.9163357e+00, 
-4.5457201e+00,
--1.4824487e-02, 
-3.1117912e+01, 
-7.9827392e-01, 
-2.3482652e+00,
-1.7561276e+00, 
-2.7935734e+01, 
-9.0150878e-02, 
-8.9242462e+01,
-5.5166054e+01, 
-2.0977840e-01, 
-1.1819119e+00,
- 3.2852470e+01,
-3.1793232e+00, 
-4.8103748e+01, 
-1.4592125e-01, 
-3.9945490e+00
+the model seems to overfit some of the stores and not work fine for others. This is an interesting problem Im not sure how to solve yet. perhaps we can incorporate multiple models and combine their outputs in a more sophisticated architecture
 
-The error in a model can be high due to two main reasons: the model architecture and the lack of normalization
+otuput:
+loss: 68731.2812 - val_loss: 68936.9219
+loss: 145094.6719 - val_loss: 148184.5625
+loss: 790753.2500 - val_loss: 851369
+loss: 100349.7812 - val_loss: 109818.4844
+loss: 59552.1133 - val_loss: 72739.2031
+loss: 158472.6250 - val_loss: 165084.375
+loss: 209442.3750 - val_loss: 213460.8125 
+loss: 243276.3594 - val_loss: 254399.26
+loss: 229779.5156 - val_loss: 281308.0938
+loss: 26464.5879 - val_loss: 37144.785
+loss: 237732.5938 - val_loss: 302056.8438
+loss: 32679.9277 - val_loss: 56478.0938
+loss: 43351.0938 - val_loss: 65663.9141
+loss: 32521.3477 - val_loss: 63108.8906
+loss: 34407.4844 - val_loss: 57926.2266
+loss: 36683.5273 - val_loss: 57021.4219
+
+
+Testing
+Mean Squared Error:  95623.00938605644
+Mean Absolute Error: 72.70468859482074
+
+
