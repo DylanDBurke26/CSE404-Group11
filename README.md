@@ -286,6 +286,70 @@ The final losses for each of the stores in testing was:
 
 A graph of the model prediction vs actual total sale value for each store can be found in the code.
 
+## Linear Regressors
+
+I made two linear regressors. The 1st one is more focused on trying to predict based off of the each individual sale instead of aggregating sales. The 2nd one is more in line with the LSTM model to compare and contrast to. 
+
+The 1st model had a RMSLE of: 3.5484104914329437
+
+The 2nd model had final RMSLE of: 
+<pre>
+1 RMSLE: 0.15828 , 0.02505
+2 RMSLE: 0.12659 , 0.01603
+3 RMSLE: 0.13102 , 0.01717
+4 RMSLE: 0.34286 , 0.11755
+5 RMSLE: 0.11455 , 0.01312
+6 RMSLE: 0.33753 , 0.11393
+7 RMSLE: 0.13508 , 0.01825
+8 RMSLE: 0.13313 , 0.01772
+9 RMSLE: 0.11621 , 0.0135
+10 RMSLE: 0.13551 , 0.01836
+11 RMSLE: 0.13333 , 0.01778
+12 RMSLE: 0.11212 , 0.01257
+13 RMSLE: 0.11469 , 0.01315
+14 RMSLE: 0.1473 , 0.0217
+15 RMSLE: 0.09744 , 0.00949
+16 RMSLE: 0.13035 , 0.01699
+17 RMSLE: 0.12835 , 0.01647
+18 RMSLE: 0.12469 , 0.01555
+19 RMSLE: 0.13491 , 0.0182
+20 RMSLE: 0.15503 , 0.02403
+21 RMSLE: 0.10382 , 0.01078
+22 RMSLE: 0.02189 , 0.00048
+23 RMSLE: 0.12894 , 0.01663
+24 RMSLE: 0.16068 , 0.02582
+25 RMSLE: 0.09873 , 0.00975
+26 RMSLE: 0.0588 , 0.00346
+27 RMSLE: 0.14627 , 0.02139
+28 RMSLE: 0.13618 , 0.01855
+29 RMSLE: 0.17741 , 0.03148
+30 RMSLE: 0.14204 , 0.02017
+31 RMSLE: 0.08384 , 0.00703
+32 RMSLE: 0.09699 , 0.00941
+33 RMSLE: 0.12212 , 0.01491
+34 RMSLE: 0.11409 , 0.01302
+35 RMSLE: 0.05774 , 0.00333
+36 RMSLE: 0.14867 , 0.0221
+37 RMSLE: 0.13861 , 0.01921
+38 RMSLE: 0.1341 , 0.01798
+39 RMSLE: 0.13811 , 0.01908
+40 RMSLE: 0.13969 , 0.01951
+41 RMSLE: 0.12067 , 0.01456
+42 RMSLE: 0.10318 , 0.01065
+43 RMSLE: 0.12213 , 0.01492
+44 RMSLE: 0.13947 , 0.01945
+45 RMSLE: 0.14297 , 0.02044
+46 RMSLE: 0.1357 , 0.01842
+47 RMSLE: 0.12344 , 0.01524
+48 RMSLE: 0.13553 , 0.01837
+49 RMSLE: 0.15402 , 0.02372
+50 RMSLE: 0.11573 , 0.01339
+51 RMSLE: 0.13745 , 0.01889
+52 RMSLE: 0.0 , 0.0
+53 RMSLE: 0.22155 , 0.04908
+54 RMSLE: 0.13456 , 0.01811
+</pre>
+
 ## Ryan Kunkel
 
 My model uses LSTM architecture combined with perceptron networkthat attempts to predict sales for individual product families in each store. I made some adjustments to the model architecture to minimize loss, including modifying the look back size and number of units in the LSTM layer. During model training, I noticed that the model was taking too long to train and that normalizing the data might help in speeding up the process. I am slightly concerned how null / missing data should.
